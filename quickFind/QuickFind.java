@@ -18,9 +18,9 @@ public class QuickFind {
 
         int mainVal = this.arr[p];
         int changeVal = this.arr[q];
-        //loops array looking for changeVal and changing the value to mainVal
+        // loops array looking for changeVal and changing the value to mainVal
         for (int i = 0; i < arr.length; i++) {
-            if(find(i) == changeVal){
+            if (find(i) == changeVal) {
                 this.arr[i] = mainVal;
             }
         }
