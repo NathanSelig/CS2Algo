@@ -36,8 +36,11 @@ public class QuickUnion {
         return p;
     }
 
-    //TODO: create function
     public boolean connected(int p, int q) {
+        if (root(p) == root(q)){
+            System.out.println("connected");
+            return true;
+        }
         return false;
     }
 

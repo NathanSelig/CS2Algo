@@ -4,40 +4,73 @@ public class Percolation {
     private int[] grid;
     private int width;
 
-    //create grid n-n
-    public Percolation(int n){
-        grid = new int[n*n];
+    // create grid n-n
+    public Percolation(int n) {
+        //last 2 values in array are virtual points
+        grid = new int[(n * n)+2];
         this.width = n;
-        
-        //set all values to 1 initially blocked
-        //* this may be silly and take extra time going through whole array could switch 1 to open 0 to closed
-        for (int i = 0; i < grid.length; i++) {
-            
+    }
+
+    // * values == 0 are blocked 1 is assuming all parents are 1 the changing to
+    //! implement quick union
+    // if open in top row connect to virual point same for bottom
+    public void open(int row, int col) {
+        int index = (row * this.width) + col;
+        grid[index] = index;
+        int parent = index;
+        // look around and make it children if open
+        // (condition) ? (return if true) : (return if false);
+        // index of surroundings
+
+        // if the value of above == parent then at the top 
+        int above = (index - this.width) > 0 ? index - this.width : index;
+        int left = (index - 1) > 0 ? index - 1 : 0;
+        int right = (index + 1) < (area()) ? index + 1 : area();
+        // if the value of below == parent then at the bottom 
+        int below = (index + this.width) < area() ? index + this.width : index;
+
+        if(above != parent && isOpen(above)){
+            union(above,parent);
+        }else if (isOpen(above)){
+            //top virtual point is arr[-2]
+            union(parent,area()+1)
+        }
+        if(below != parent && isOpen(below)){
+            union(below,parent);
+        }else if(isOpen(below)){
+            //bottom virtual point is area[-1]
+            union(parent , area()+2)
+        }
+        if(right != parent && isOpen(above)){
+            union(right,parent);
+        }
+        if(left != parent && isOpen(left)){
+            union(left,parent);
         }
 
-
     }
 
-    public void open(int row, int col){
-        int index = (row*this.width) + col;
-        grid[index] = 0;
-    }
-
-    public boolean isOpen(int row, int col){
-        // 1 is closed 0 is open
-        int index = (row*this.width) + col;
+    public boolean isOpen(int index) {
         return grid[index] == 0;
     }
-    public boolean isFull(int row, int col){
-        return !isOpen(row, col);
+
+    public boolean isFull(index) {
+        return !isOpen(index);
     }
 
-    public int numberOfOpenSites(){}
+    public int numberOfOpenSites() {
+        // check values == 0 count++
+        return 0;
+    }
 
-    public boolean percolates(){
-        //there are n*n plots so a for loop will run n*n loops
-        //in each square find related square
+    public boolean percolates() {
+        //if bottom row has root at the top the percolates
+        return false;
+    }
 
+    private int area() {
+        //remove the 2 virtual points
+        return this.grid.length-2;
     }
 
 }
