@@ -4,6 +4,7 @@ public class Percolation {
     private int[] grid;
     private int width;
     private QuickUnion grouper;
+    private int countOpenSquares;
 
     // create grid n-n
     public Percolation(int n) {
@@ -13,11 +14,13 @@ public class Percolation {
         grouper = new QuickUnion(grid);
         grid[grid.length - 1] = grid.length - 1;
         grid[grid.length - 2] = grid.length - 2;
+        countOpenSquares = 0;
     }
 
     // * values == arr.length are blocked
     // if open in top row connect to virtual point same for bottom
     public void open(int index) {
+        countOpenSquares++;
         grid[index] = index;
         int parent = index;
         // look around and make it children if open
@@ -25,7 +28,7 @@ public class Percolation {
         // index of surroundings
 
         // if the value of above == parent then at the top
-        int above = (index - this.width) > 0 ? index - this.width : index;
+        int above = (index - this.width) >= 0 ? index - this.width : index;
         int left = (index - 1) > 0 ? index - 1 : 0;
         int right = (index + 1) < (area()) ? index + 1 : area();
         // if the value of below == parent then at the bottom
@@ -53,7 +56,7 @@ public class Percolation {
         } else if (isOpen(left)) {
             this.grouper.union(left, area());
         }
-//! declare open count var
+        // ! declare open count var
     }
 
     public boolean isOpen(int index) {
@@ -65,13 +68,7 @@ public class Percolation {
     }
 
     public int numberOfOpenSites() {
-        int count = 0;
-        for (int i = 0; i < area(); i++) {
-            if (grid[i] != area() + 2) {
-                count++;
-            }
-        }
-        return count;
+        return countOpenSquares;
     }
 
     public boolean percolates() {

@@ -17,12 +17,12 @@ public class PercolationStats {
             pr.open(luckyNumber);
          }
          System.out.println("Hole found!");
-         double openP = new Double(pr.numberOfOpenSites()) / (n * n);
+         double openP = new Double(pr.numberOfOpenSites()) / (double)(n * n);
          trialData[i] = openP;
       }
 
    }
-
+//* how to without array to store results
    public double mean() {
       double sum = 0;
       for (double i : trialData) {
@@ -31,6 +31,7 @@ public class PercolationStats {
       return sum / trialData.length;
    }
 
+//!returning Nan
    public double stddev() {
       double sum = 0;
       for (double d : trialData) {
