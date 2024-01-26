@@ -17,8 +17,7 @@ public class Percolation {
 
     // * values == arr.length are blocked
     // if open in top row connect to virtual point same for bottom
-    public void open(int row, int col) {
-        int index = (row * this.width) + col;
+    public void open(int index) {
         grid[index] = index;
         int parent = index;
         // look around and make it children if open
@@ -54,7 +53,7 @@ public class Percolation {
         } else if (isOpen(left)) {
             this.grouper.union(left, area());
         }
-
+//! declare open count var
     }
 
     public boolean isOpen(int index) {
