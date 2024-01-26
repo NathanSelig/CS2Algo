@@ -20,6 +20,10 @@ public class Percolation {
     // * values == arr.length are blocked
     // if open in top row connect to virtual point same for bottom
     public void open(int index) {
+        // guard for if already open
+        if (isOpen(index))
+            return;
+
         countOpenSquares++;
         grid[index] = index;
         int parent = index;
@@ -30,7 +34,7 @@ public class Percolation {
         // if the value of above == parent then at the top
         int above = (index - this.width) >= 0 ? index - this.width : index;
         int left = (index - 1) > 0 ? index - 1 : 0;
-        int right = (index + 1) < (area()) ? index + 1 : area();
+        int right = (index + 1) <= (area()) ? index + 1 : area();
         // if the value of below == parent then at the bottom
         int below = (index + this.width) < area() ? index + this.width : index;
 
@@ -56,7 +60,6 @@ public class Percolation {
         } else if (isOpen(left)) {
             this.grouper.union(left, area());
         }
-        // ! declare open count var
     }
 
     public boolean isOpen(int index) {
@@ -78,6 +81,17 @@ public class Percolation {
     private int area() {
         // remove the 2 virtual points
         return this.grid.length - 2;
+    }
+
+    //print array as a table
+    public String toString() {
+        for (int i = 0; i < grid.length; i++) {
+            System.out.print(grid[i] + " ");
+            if(i%width == 0) {
+                System.out.println("\n");
+            }
+        }
+        return "\n";
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.Random;
 public class PercolationStats {
    private double[] trialData;
    private Random ran;
+   private double sum;
 
    public PercolationStats(int n, int trail) {
       ran = new Random();
@@ -16,43 +17,42 @@ public class PercolationStats {
             int luckyNumber = ran.nextInt(n * n);
             pr.open(luckyNumber);
          }
+         //for testing
+         System.out.println(pr);
          System.out.println("Hole found!");
-         double openP = new Double(pr.numberOfOpenSites()) / (double)(n * n);
+         double openP = new Double(pr.numberOfOpenSites()) / (double) (n * n);
          trialData[i] = openP;
+         sum += openP;
       }
 
    }
-//* how to without array to store results
+
    public double mean() {
-      double sum = 0;
-      for (double i : trialData) {
-         sum += i;
-      }
       return sum / trialData.length;
    }
 
-//!returning Nan
+   // !returning Nan
    public double stddev() {
-      double sum = 0;
+      double diffSum = 0;
       for (double d : trialData) {
-         double diff = (mean() - d) * (mean() - d);
-         sum += diff;
+         double diff = Math.pow(d - mean(),2);
+         diffSum += diff;
       }
-      return Math.sqrt(sum / trialData.length - 1);
+      return Math.sqrt((diffSum / (trialData.length - 1)));
    }
 
    public double confidenceLo() {
-      // mean - 1.96s/t^1/2
+      // mean - 1.96s/sqrt(t)
       return mean() - ((1.96 * stddev()) / Math.sqrt(trialData.length));
    }
 
    public double confidenceHi() {
-      // mean + 1.96s/t^1/2
-      return mean() - ((1.96 * stddev()) / Math.sqrt(trialData.length));
+      // mean + 1.96s/sqrt(t)
+      return mean() + ((1.96 * stddev()) / Math.sqrt(trialData.length));
    }
 
    public String toString() {
-      String info = "mean: " + mean() + "\nstddev: " + stddev() + "\nconfLo: " + confidenceLo() + "\nconfHi: "
+      String info = "\nmean: " + mean() + "\nstddev: " + stddev() + "\nconfLo: " + confidenceLo() + "\nconfHi: "
             + confidenceHi();
       return info;
    }
