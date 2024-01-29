@@ -80,15 +80,16 @@ public class Percolation {
     }
 
     // print array as a table
+
     public String toString() {
-        System.out.println("grid:");
+        String result = "Grid:\n";
         for (int i = 0; i < grid.length; i++) {
-            System.out.print(grid[i] + " ");
+            result += grid[i] + " ";
             if ((i + 1) % width == 0) {
-                System.out.println("\n");
+                result += "\n";
             }
         }
-        return "\n";
+        return result;
     }
 
 }
