@@ -7,7 +7,7 @@ public class main {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
 
-        PercolationStats test = new PercolationStats(5, 1);
+        PercolationStats test = new PercolationStats(10, 100000);
         System.out.println(test);
 
         long end = System.currentTimeMillis();

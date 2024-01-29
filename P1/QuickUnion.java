@@ -25,6 +25,7 @@ public class QuickUnion {
     public int root(int p) {
         // work up using "pointers" till i == arr[i]
         // parent is value saved in p
+
         while (p != arr[p]) {
             p = arr[p];
         }

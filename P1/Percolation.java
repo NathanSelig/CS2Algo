@@ -33,32 +33,28 @@ public class Percolation {
 
         // if the value of above == parent then at the top
         int above = (index - this.width) >= 0 ? index - this.width : index;
-        int left = (index - 1) > 0 ? index - 1 : 0;
-        int right = (index + 1) <= (area()) ? index + 1 : area();
+        int left = (index % this.width) == 0 ? index : index - 1;
+        int right = ((index + 1) % this.width) == 0 ? index : index + 1;
         // if the value of below == parent then at the bottom
         int below = (index + this.width) < area() ? index + this.width : index;
 
         if (above != parent && isOpen(above)) {
-            this.grouper.union(above, parent);
+            this.grouper.union(parent, above);
         } else if (above == parent) {
             // top virtual point is arr[-2]
             this.grouper.union(parent, area());
         }
         if (below != parent && isOpen(below)) {
-            this.grouper.union(below, parent);
-        } else if (isOpen(below)) {
+            this.grouper.union(parent, below);
+        } else if (below == parent) {
             // bottom virtual point is area[-1]
             this.grouper.union(parent, area() + 1);
         }
         if (right != parent && isOpen(right)) {
             this.grouper.union(right, parent);
-        } else if (isOpen(right)) {
-            this.grouper.union(right, area() + 1);
         }
         if (left != parent && isOpen(left)) {
             this.grouper.union(left, parent);
-        } else if (isOpen(left)) {
-            this.grouper.union(left, area());
         }
     }
 
@@ -83,11 +79,12 @@ public class Percolation {
         return this.grid.length - 2;
     }
 
-    //print array as a table
+    // print array as a table
     public String toString() {
+        System.out.println("grid:");
         for (int i = 0; i < grid.length; i++) {
             System.out.print(grid[i] + " ");
-            if(i%width == 0) {
+            if ((i + 1) % width == 0) {
                 System.out.println("\n");
             }
         }
