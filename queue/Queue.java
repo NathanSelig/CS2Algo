@@ -1,5 +1,5 @@
 package queue;
-
+// people in line at a store the person in first knows thr person behind them last is the most recent person to enter
 public class Queue {
     private class Node {
         String item;
@@ -23,7 +23,8 @@ public class Queue {
             last = newNode;
             first = newNode;
         } else {
-            newNode.next = last;
+        // the current last node points to the new last node the new last node is now the last node
+            last.next = newNode;
             last = newNode;
         }
 
