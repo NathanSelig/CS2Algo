@@ -89,6 +89,10 @@ public class Percolation {
                 result += "\n";
             }
         }
+
+        //!only for testing with vscode debug
+        //System.out.println(result);
+        //!
         return result;
     }
 
