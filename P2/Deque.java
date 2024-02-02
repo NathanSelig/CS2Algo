@@ -67,8 +67,15 @@ public class Deque<Type> {
             return null;
         }
         Node result = first;
-        first = first.next;
-
+        if (first.next != null) {
+            first = first.next;
+            first.prev = null;
+        } else {
+            first.next = null;
+            first = null;
+            last = null;
+        }
+        sizeCounter--;
         return result.item;
     }
 
@@ -78,8 +85,15 @@ public class Deque<Type> {
             return null;
         }
         Node result = last;
-        last = last.prev;
-
+        if (last.prev != null) {
+            last = last.prev;
+            last.next = null;
+        } else {
+            last.prev = null;
+            last = null;
+            first = null;
+        }
+        sizeCounter--;
         return result.item;
     }
 
@@ -95,6 +109,7 @@ public class Deque<Type> {
         public boolean hasNext() {
             return current != null;
         }
+
         @Override
         public Type next() {
             Type item = current.item;
