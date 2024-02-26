@@ -13,8 +13,6 @@ public class BruteCollinearPoints {
         // top level
         for (int i = 0; i < points.length; i++) {
             Point root = points[i];
-            StdDraw.setPenColor(StdDraw.RED);
-            root.draw();
             // second point search
             for (int j = i + 1; j < points.length; j++) {
                 Point q = points[j];
@@ -31,18 +29,9 @@ public class BruteCollinearPoints {
                         if (slope != root.slopeTo(s)) {
                             continue;
                         }
-                        StdDraw.setPenColor(StdDraw.BLUE);
-                        s.draw();
-                        // we have a line
-                        //draw the points on the line
-                        StdDraw.setPenRadius(0.01);
-                        StdDraw.setPenColor(StdDraw.BLACK);
-                        q.draw();
-                        r.draw();
-                        s.draw();
-                        root.draw();
-                        //draw the line and add it to the LineSegment array
-                        //* sometimes the root or the last point is in the "middle" of the line so the line is not fully drawn
+                        // draw the line and add it to the LineSegment array
+                        // * sometimes the root or the last point is in the "middle" of the line so the
+                        // line is not fully drawn
                         lines.add(new LineSegment(root, s));
                         StdDraw.setPenColor(StdDraw.GRAY);
                         StdDraw.setPenRadius(0.001);
@@ -52,8 +41,6 @@ public class BruteCollinearPoints {
                     }
                 }
             }
-            StdDraw.setPenColor(StdDraw.WHITE);
-            root.draw();
         }
     }
 
@@ -63,5 +50,9 @@ public class BruteCollinearPoints {
 
     public ArrayList<LineSegment> segments() {
         return lines;
+    }
+
+    public double linePercent() {
+        return (double) lineCount / ((double) points.length / 4);
     }
 }
