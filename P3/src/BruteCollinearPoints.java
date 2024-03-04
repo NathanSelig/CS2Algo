@@ -33,9 +33,9 @@ public class BruteCollinearPoints {
                         // * sometimes the root or the last point is in the "middle" of the line so the
                         // line is not fully drawn
                         lines.add(new LineSegment(root, s));
-                        StdDraw.setPenColor(StdDraw.GRAY);
+/*                         StdDraw.setPenColor(StdDraw.GRAY);
                         StdDraw.setPenRadius(0.001);
-                        lines.get(lineCount).draw();
+                        lines.get(lineCount).draw(); */
                         lineCount++;
                         break;
                     }

@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class App {
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+        Point[] random = randomSetup();
         /*
          * StdDraw.setScale(0, 10);
          * StdDraw.setPenRadius(0.01);
@@ -19,21 +19,22 @@ public class App {
          * control[6] = new Point(13, 15);
          * control[7] = new Point(14, 16);
          */
-        // BruteCollinearPoints bruteMethod = new BruteCollinearPoints(randomSetup());
 
-        FastCollinearPoints fastMethod = new FastCollinearPoints(randomSetup());
+        long startTime = System.currentTimeMillis();
+        // FastCollinearPoints fastMethod = new FastCollinearPoints(random);
+        BruteCollinearPoints bruteMethod = new BruteCollinearPoints(randomSetup());
 
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
-        System.out.println(fastMethod.numberOfSegments());
-        System.out.println(fastMethod.segments());
+        System.out.println(bruteMethod.numberOfSegments());
+        System.out.println(bruteMethod.segments());
         System.out.println("Execution time in milliseconds  : " + totalTime);
 
     }
 
     public static Point[] randomSetup() {
         Random rng = new Random();
-        int n = 1000;
+        int n = 5000;
         int size = 720;
         Point[] points = new Point[n];
         StdDraw.setCanvasSize(720, 720);

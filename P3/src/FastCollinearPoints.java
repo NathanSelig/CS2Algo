@@ -12,17 +12,20 @@ public class FastCollinearPoints {
         slopes = new double[points.length - 1];
         // slopes is length minus 1 because origin can not make slope with itself
         for (int i = 0; i < points.length; i++) {
+            // sorts points to find origin
             Arrays.sort(points, i, points.length);
             Point origin = points[i];
+            // sorts based of the new origin
             Arrays.sort(points, i, points.length, origin.slopeOrder());
 
-            // being calculated and moved
+            // slope being calculated and moved to slope array ignoring points that are now
+            // origins
             for (int j = i + 1; j < points.length; j++) {
                 double slope = origin.slopeTo(points[j]);
                 slopes[j - 1] = slope;
             }
 
-            //not i plus 1 because slope size is -1 of points
+            // k = i because we want to only look at slopes that are relevant
             int k = i;
             int numOfSlopes = 0;
             while (k < slopes.length - 1) {
@@ -30,24 +33,29 @@ public class FastCollinearPoints {
                     numOfSlopes++;
                 }
 
-                // Case: if more points after the line
+                // Case: if more points are after the line
                 if (numOfSlopes >= 2 && slopes[k] != slopes[k + 1]) {
                     LineSegment line = new LineSegment(origin, points[k + 1]);
-/*                     StdDraw.setPenRadius(0.001);
-                    StdDraw.setPenColor(StdDraw.BLACK);
-                    line.draw(); */
+                    /*
+                     * StdDraw.setPenRadius(0.001);
+                     * StdDraw.setPenColor(StdDraw.BLACK);
+                     * line.draw();
+                     */
                     lines.add(line);
                     numOfSlopes = 0;
-                    // Case: if line is at end of array
+                    // Case: if the line is at end of the slopes array
                 } else if (numOfSlopes >= 2 && k == slopes.length - 2) {
                     LineSegment line = new LineSegment(origin, points[k + 2]);
-/*                     StdDraw.setPenRadius(0.001);
-                    StdDraw.setPenColor(StdDraw.BLACK);
-                    line.draw(); */
+                    /*
+                     * StdDraw.setPenRadius(0.001);
+                     * StdDraw.setPenColor(StdDraw.BLACK);
+                     * line.draw();
+                     */
                     lines.add(line);
                     numOfSlopes = 0;
-                    //Case: if we have 2 slopes that are equal and then nothing more we need to reset numOfSlopes = 0
-                }else if(numOfSlopes <= 2 && slopes[k] != slopes[k + 1]){
+                    // Case: if we have 2 equal slopes but not a line we need to
+                    // reset numOfSlopes = 0
+                } else if (numOfSlopes <= 2 && slopes[k] != slopes[k + 1]) {
                     numOfSlopes = 0;
                 }
                 k++;
